@@ -1,45 +1,21 @@
 import numpy as np 
 import datetime as dt 
 import hashlib as hl 
-
-class Block:
-
-	blockNo = 0
-	data = None
-	prev_hash = None
-	next_hash = None
-	genr_hash = None
-	timestamp = None
-
-	def __init__(self, data):
-		self.data = data
-		timestamp = dt.datetime.now()
-
-	def hashgen(self):		
-		h = hl.sha224()
-		h.update(
-			str(self.timestamp).encode('utf-8')
-		)
-
-		return h.hexdigest()
-
-	def __str__(self):
-		return(
-			str(self.blockNo) + '\n' + 
-			str(self.data) + '\n' + 
-			str(self.hashgen())
-		)
-
-
-class BlockChain:
-	block = Block("Genesis")
-
-	def add():
-		
+from block import Block
+from blockchain import BlockChain
 
 blockchain = BlockChain()
 
-print(blockchain.block)
+blockchain.mine(Block('A->B:10'))
+blockchain.mine(Block('B->A:5'))
+blockchain.mine(Block('B->C:15'))
+blockchain.mine(Block('D->A:6'))
+blockchain.mine(Block('A->B:10'))
+blockchain.mine(Block('C->D:5'))
+blockchain.mine(Block('B->D:20'))
+blockchain.mine(Block('C->A:7'))
 
-
-
+temp = blockchain.head
+while temp.next_block is not None:
+	print(temp,end='\n\n')
+	temp = temp.next_block
