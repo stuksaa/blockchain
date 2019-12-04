@@ -1,8 +1,8 @@
 import numpy as np 
 import datetime as dt 
 import hashlib as hl 
-from block import Block
-from blockchain import BlockChain
+from block import Block 
+from blockchain import BlockChain 
 
 blockchain = BlockChain()
 

@@ -2,7 +2,7 @@ from block import Block
 
 class BlockChain:
 
-	sofRed	= 1
+	sofRed	= 10
 	maxiter = 2**32
 	maxnum 	= 2**(256-sofRed)
 
