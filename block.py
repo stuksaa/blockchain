@@ -13,16 +13,13 @@ class Block:
 
 	def __init__(self, data):
 		self.data = data
-		timestamp = dt.datetime.now()
 
 	def hashgen(self):		
 		h = hl.sha256()
 		h.update(
-	        str(self.nofAttempt).encode('utf-8') +
-	        str(self.data).encode('utf-8') +
-	        str(self.prev_hash).encode('utf-8') +
 	        str(self.timestamp).encode('utf-8') +
-	        str(self.blockNo).encode('utf-8')
+	        str(self.nofAttempt).encode('utf-8') +
+	        str(self.data).encode('utf-8')
 		)
 
 		return h.hexdigest()

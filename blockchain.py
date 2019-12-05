@@ -1,10 +1,8 @@
+import datetime as dt
+import hashlib as hl
 from block import Block
 
 class BlockChain:
-
-	sofRed	= 10
-	maxiter = 2**32
-	maxnum 	= 2**(256-sofRed)
 
 	block 	= Block("Genesis")
 	head = block
@@ -17,11 +15,15 @@ class BlockChain:
 		self.block = self.block.next_block
 		self.block.blockNo = bno + 1
 		
-
 	def mine(self, block):
-		for i in range(self.maxiter):
-			if int(block.hashgen(), 16)<=self.maxnum:
-				self.add(block)
-				break
+		h = hl.sha256()
+		notHash = True
+		while notHash:
+			block.timestamp = dt.datetime.now()
+			hashgen = block.hashgen()
+			if hashgen[0:4] == '0000':
+				notHash = False
 			else:
 				block.nofAttempt += 1
+
+		self.add(block)
