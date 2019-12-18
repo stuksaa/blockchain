@@ -1,34 +1,52 @@
 import datetime as dt
 import hashlib as hl
+from transaction import Transaction
 
 class Block:
 
-	blockNo 	= 0
-	nofAttempt 	= 0
-	timestamp 	= None
-	data 		= None
-	prev_hash 	= 0
-	genr_hash 	= None
-	next_block 	= None
+	nof_blocks			= 0
+	nonce				= 0
+	block_hash 			= None
+	previous_hash 		= None
+	tdata 				= None
+	
+	def __init__(self, tdata, previous_hash):
+		Block.nof_blocks += 1
+		self.index = Block.nof_blocks
+		self.tdata = tdata
+		self.previous_hash = previous_hash
+		self.block_hash = self.generateHash()
 
-	def __init__(self, data):
-		self.data = data
+	def getHash(self):
+		return self.generateHash()
 
-	def hashgen(self):		
+	def getPreviousHash(self):
+		return self.previous_hash
+
+	def getIndex(self):
+		return self.index
+
+	def generateHash(self):		
 		h = hl.sha256()
 		h.update(
-	        str(self.timestamp).encode('utf-8') +
-	        str(self.nofAttempt).encode('utf-8') +
-	        str(self.data).encode('utf-8')
+	        str(self.nonce).encode('utf-8') +
+	        str(self.tdata.amount).encode('utf-8') +
+	        str(self.tdata.senderKey).encode('utf-8') +
+	        str(self.tdata.receiverKey).encode('utf-8') +
+	        str(self.tdata.timestamp).encode('utf-8')
 		)
 
 		return h.hexdigest()
 
+	def isvalidHash(self):
+		return self.generateHash() == self.getHash()
+
 	def __str__(self):
 		return(
-			str(self.blockNo) + '\n' + 
-			str(self.data) + '\n' + 
-			str(self.prev_hash) + '\n' +
-			str(self.hashgen()) + '\n' +
-			str(self.nofAttempt)
+			str('****************************************************************') + '\n' + '\n' +
+			str(self.index) + '\n' + 
+			str(self.tdata) + '\n' + 
+			str(self.previous_hash) + '\n' +
+			str(self.getHash()) + '\n' +
+			str(self.nonce) + '\n'
 		)

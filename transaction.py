@@ -1,4 +1,3 @@
-
 class Transaction():
 
 	def __init__(self, amount, senderKey, receiverKey, timestamp):

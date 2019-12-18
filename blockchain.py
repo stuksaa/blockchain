@@ -1,29 +1,37 @@
 import datetime as dt
 import hashlib as hl
 from block import Block
+from transaction import Transaction
 
 class BlockChain:
 
-	block 	= Block("Genesis")
-	head = block
+	items = []
 
-	def add(self, block):
-		block.prev_hash = self.block.hashgen()
-		block.genr_hash = block.hashgen()
-		bno = self.block.blockNo
-		self.block.next_block = block
-		self.block = self.block.next_block
-		self.block.blockNo = bno + 1
+	def __init__(self):
+		t = Transaction(None, None, None, dt.datetime.now())
+		genesis = Block(t, None)
+		self.items.append(genesis)
 		
-	def mine(self, block):
-		h = hl.sha256()
+	def mineblock(self, block):
 		notHash = True
 		while notHash:
-			block.timestamp = dt.datetime.now()
-			hashgen = block.hashgen()
-			if hashgen[0:4] == '0000':
+			if block.getHash()[0:4] == '0000':
 				notHash = False
 			else:
-				block.nofAttempt += 1
+				block.nonce += 1
+				block.generateHash()
 
-		self.add(block)
+		self.items.append(block)
+
+	def lastBlock(self):
+		return self.items[-1]
+
+	def firstBlock(self):
+		return self.items[1] #first is not the genesis block
+
+	def getChain(self):
+		return self.items
+
+	def printChain(self):
+		for i in self.items:
+			print(str(i))
