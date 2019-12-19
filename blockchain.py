@@ -10,27 +10,21 @@ class BlockChain:
 		genesis = Block(t, None, 'Satoshi')
 		self.items = [genesis]
 		
-	def mineblock(self, block):
+	def mine_block(self, block):
 		notHash = True
 		while notHash:
-			if block.getHash()[0:4] == '0000':
+			if block.get_hash()[0:4] == '0000':
 				notHash = False
 			else:
 				block.nonce += 1
-				block.generateHash()
+				block.generate_hash()
 
 		self.items.append(block)
 
-	def lastBlock(self):
-		return self.items[-1]
-
-	def firstBlock(self):
-		return self.items[1] #first is not the genesis block
-
-	def getChain(self):
+	def get_chain(self):
 		return self.items
 
-	def printChain(self):
+	def print_chain(self):
 		for idx, e in enumerate(self.items):
-			print(idx)
+			print(str(idx) + '. block')
 			print(str(e))
