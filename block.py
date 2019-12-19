@@ -4,18 +4,16 @@ from transaction import Transaction
 
 class Block:
 
-	nof_blocks			= 0
 	nonce				= 0
 	block_hash 			= None
 	previous_hash 		= None
 	tdata 				= None
 	
-	def __init__(self, tdata, previous_hash):
-		Block.nof_blocks += 1
-		self.index = Block.nof_blocks
+	def __init__(self, tdata, previous_hash, miner_name):
 		self.tdata = tdata
 		self.previous_hash = previous_hash
 		self.block_hash = self.generateHash()
+		self.miner_name = miner_name
 
 	def getHash(self):
 		return self.generateHash()
@@ -43,10 +41,10 @@ class Block:
 
 	def __str__(self):
 		return(
-			str('****************************************************************') + '\n' + '\n' +
-			str(self.index) + '\n' + 
+			str('****************************************************************') + '\n' +
 			str(self.tdata) + '\n' + 
 			str(self.previous_hash) + '\n' +
 			str(self.getHash()) + '\n' +
+			str(self.miner_name) + '\n' +
 			str(self.nonce) + '\n'
 		)

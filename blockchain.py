@@ -5,12 +5,10 @@ from transaction import Transaction
 
 class BlockChain:
 
-	items = []
-
 	def __init__(self):
 		t = Transaction(None, None, None, dt.datetime.now())
-		genesis = Block(t, None)
-		self.items.append(genesis)
+		genesis = Block(t, None, 'Satoshi')
+		self.items = [genesis]
 		
 	def mineblock(self, block):
 		notHash = True
@@ -33,5 +31,6 @@ class BlockChain:
 		return self.items
 
 	def printChain(self):
-		for i in self.items:
-			print(str(i))
+		for idx, e in enumerate(self.items):
+			print(idx)
+			print(str(e))
